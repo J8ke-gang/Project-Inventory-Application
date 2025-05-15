@@ -1,16 +1,7 @@
 {
-    "name": "project-inventory-application",
-    "version": "1.0.0",
-    "scripts": {
-      "start-backend": "cd backend && npm start",  
-      "dev-frontend": "cd frontend && npm run dev", 
-      "build-frontend": "cd frontend && npm run build",  
-      "start": "npm run start-backend && npm run dev-frontend"
-    },
-    "license": "ISC",
-    "dependencies": {
-      "cors": "^2.8.5",
-      "dotenv": "^16.5.0"
-    }
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.6.0"
   }
-  
+}

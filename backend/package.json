@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js",
+     "seed": "node db/seed.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "pg": "^8.15.6"
+    "path-to-regexp": "^8.2.0",
+    "pg": "^8.15.6",
+    "router": "^2.2.0"
   }
 }

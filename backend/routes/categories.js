@@ -1,8 +1,7 @@
-import express from "express";
+import express from 'express';
+import { getCategories } from '../controllers/categoriesController.js';
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Tools endpoint working!" });
-});
+router.get('/', getCategories);
 
 export default router;

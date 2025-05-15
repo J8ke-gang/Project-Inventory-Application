@@ -1,12 +1,16 @@
-import pool from "../db/db.js";
+import pool from "../db/app.js";
 
-export const getAllTools = async (req, res) => {
-  const result = await pool.query("SELECT * FROM tools");
-  res.json(result.rows);
+export const getToolsByCategory = async (req, res) => {
+  const category = decodeURIComponent(req.params.category).toLowerCase().trim();
+
+  try {
+    const query = "SELECT * FROM tools WHERE LOWER(category) = $1";
+    const result = await pool.query(query, [category]);
+    const tools = result.rows;
+    res.json(tools);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching tools");
+  }
 };
 
-export const getToolById = async (req, res) => {
-  const { id } = req.params;
-  const result = await pool.query("SELECT * FROM tools WHERE id = $1", [id]);
-  res.json(result.rows[0]);
-};

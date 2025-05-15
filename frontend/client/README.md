@@ -1,12 +1,16 @@
-# React + Vite
+Mechanic Tools Inventory Management
+A web-based tool inventory management app that helps businesses track and manage their tool inventory. Users can view, add, update, and delete tools, while admins can manage tool data, brands, and categories.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project Description
+The Mechanic Tools Inventory Management app allows businesses to easily manage their tools. This app provides features for adding, updating, viewing, and deleting tools. Admin users can also manage tool brands and categories. The app is built with a React frontend and an Express.js backend, using PostgreSQL for the database.
 
-Currently, two official plugins are available:
+Technologies Used
+Frontend: React, JSX, CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Backend: Node.js, Express.js
 
-## Expanding the ESLint configuration
+Database: PostgreSQL
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Authentication: JWT (JSON Web Tokens) for secure authentication
+
+Testing: React Testing Library

@@ -1,10 +1,13 @@
-import pool from "../db/db.js";
+import pool from "../db/app.js";
 
-export const getAllTools = async (req, res) => {
+// Controller function to get all categories
+export const getCategories = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM tools");
-    res.json(result.rows);
+    const result = await pool.query("SELECT DISTINCT category FROM tools");
+    const categories = result.rows;
+    res.json(categories);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).send("Error fetching categories");
   }
 };

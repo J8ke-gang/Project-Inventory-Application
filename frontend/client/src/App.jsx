@@ -1,26 +1,23 @@
-import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/navbar';
+import HomePage from './components/homePage';
+import ToolsByCategory from './components/toolCategories';
+import ContactUs from './components/contactUs';
+import ToolsPage from './components/toolsPage';
 
-function App() {
-  const [tools, setTools] = useState([]);
-
-  // Fetch tools from the backend API
-  useEffect(() => {
-    fetch(import.meta.env.VITE_API_URL)
-      .then((res) => res.json())
-      .then((data) => setTools(data))
-      .catch((error) => console.error('Error fetching tools:', error));
-  }, []);
-
+const App = () => {
   return (
-    <div>
-      <h1>Tool Inventory</h1>
-      <ul>
-        {tools.map((tool, index) => (
-          <li key={index}>{tool.name} - Quantity: {tool.quantity}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/category/:categoryName" element={<ToolsByCategory />} />
+         <Route path="/tools" element={<Tools />} />
+        <Route path="/contact" element={<ContactUs />} />
+
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
