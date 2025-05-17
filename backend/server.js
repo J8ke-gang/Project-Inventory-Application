@@ -5,6 +5,7 @@ import toolsRoutes from "./routes/tools.js";
 import contactRoutes from "./routes/contact.js"; 
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 

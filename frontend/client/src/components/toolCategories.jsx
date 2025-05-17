@@ -5,33 +5,34 @@ import { fetchToolsByCategory } from '../api/api';
 const ToolsByCategory = () => {
   const { categoryName } = useParams();
   const [tools, setTools] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!categoryName) return;
+
+    console.log('Fetching tools for category:', categoryName);
+
     fetchToolsByCategory(categoryName)
-      .then(data => setTools(data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .then(setTools)
+      .catch((err) => {
+        setError(err.message);
+        console.error(err);
+      });
   }, [categoryName]);
 
-
-
-  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="tools-category-container">
-      <h2>Tools in category:</h2>
-      {tools.length === 0 ? (
-        <p>No tools found in this category.</p>
-      ) : (
-        <ul className="tools-list">
-          {tools.map(tool => (
-            <li key={tool.id} className="tool-item">{tool.name}</li>
-          ))}
-        </ul>
-      )}
+    <div>
+      <h2>Tools in category: {categoryName}</h2>
+      <ul>
+        {tools.map(tool => (
+          <li key={tool.id}>{tool.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
 export default ToolsByCategory;
+

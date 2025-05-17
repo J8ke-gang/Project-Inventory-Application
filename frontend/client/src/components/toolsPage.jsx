@@ -7,6 +7,20 @@ function ToolsPage() {
   const [tools, setTools] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const normalizeCategory = (cat) => {
+    if (!cat) return "";
+    const c = cat.toLowerCase();
+    if (c.includes("power")) return "power tool";
+    if (c.includes("hand")) return "hand tool";
+    if (
+      c.includes("toolbox") ||
+      c.includes("tool box") ||
+      c.includes("toolboxes")
+    )
+      return "tool box";
+    return c;
+  };
+
   useEffect(() => {
     fetchCategories()
       .then((data) => {
@@ -19,11 +33,24 @@ function ToolsPage() {
   useEffect(() => {
     if (!activeCategory) return;
     setLoading(true);
-    fetchToolsByCategory(activeCategory)
-      .then(setTools)
+
+    const normalizedCategory = normalizeCategory(activeCategory);
+    console.log("Fetching tools for category:", normalizedCategory);
+
+    fetchToolsByCategory(normalizedCategory)
+      .then((data) => {
+        console.log("Tools data received:", data);
+        setTools(data);
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [activeCategory]);
+
+  const capitalizeWords = (str) =>
+    str
+      .split(" ")
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join(" ");
 
   return (
     <div className="tools-page-container">
@@ -36,7 +63,7 @@ function ToolsPage() {
             onClick={() => setActiveCategory(cat.category)}
             className={activeCategory === cat.category ? "active" : ""}
           >
-            {cat.category[0].toUpperCase() + cat.category.slice(1)}
+            {capitalizeWords(cat.category)}
           </button>
         ))}
       </div>
@@ -47,7 +74,11 @@ function ToolsPage() {
         <ul className="tools-list">
           {tools.map((tool) => (
             <li key={tool.id}>
-              <strong>{tool.name}</strong> — {tool.description}
+              <strong>{tool.name}</strong> —{" "}
+              {tool.description || "No description"}
+              In stock:{" "}
+              {tool.instock === true || tool.instock === "t" ? "Yes" : "No"} (
+              {tool.quantity})
             </li>
           ))}
         </ul>
@@ -59,4 +90,3 @@ function ToolsPage() {
 }
 
 export default ToolsPage;
-
