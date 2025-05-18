@@ -1,7 +1,8 @@
 import express from 'express';
-import { getCategories } from '../controllers/categoriesController.js';
+import { getAllCategories } from '../controllers/categoriesController.js';
+
 const router = express.Router();
 
-router.get('/', getCategories);
+router.get('/', getAllCategories);
 
 export default router;

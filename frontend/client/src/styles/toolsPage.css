@@ -1,0 +1,65 @@
+.tools-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.tools-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tool-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.tool-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tool-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.tool-info {
+  flex: 1;
+}
+
+.tool-info strong {
+  font-size: 1.2rem;
+  color: #0070f3;
+}
+
+.tool-info p {
+  margin: 0.3rem 0 0;
+  font-weight: 600;
+  color: #555;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  padding: 1rem;
+  background: #ffe6e6;
+  border-radius: 6px;
+  max-width: 600px;
+  margin: 1rem auto;
+  text-align: center;
+}

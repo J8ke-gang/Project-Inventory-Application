@@ -1,35 +1,27 @@
-import pool from "../db/app.js";
+import pool from '../db/database.js';
+
+const normalizeCategory = (category) => {
+  const cat = category.toLowerCase();
+  if (cat.includes('tool box')) return 'toolboxes';
+  if (cat.includes('hand tool')) return 'handtools';
+  if (cat.includes('power tool')) return 'powertools';
+  return cat;
+};
 
 export const getToolsByCategory = async (req, res) => {
-  const category = decodeURIComponent(req.params.category).toLowerCase().trim();
-
   try {
-    const query = "SELECT * FROM tools WHERE LOWER(REPLACE(category, ' ', '')) = $1";
-    const result = await pool.query(query, [category]);
-    console.log("Category requested:", category);
-    console.log("Tools found:", result.rows.length);
+    const rawCategory = req.params.category;
+    console.log('Received category:', rawCategory);
+
+    const category = normalizeCategory(rawCategory);
+    console.log('Normalized category:', category);
+
+    const result = await pool.query('SELECT * FROM tools WHERE category = $1', [category]);
+
+    console.log('DB returned rows:', result.rows.length);
     res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching tools by category");
+  } catch (error) {
+    console.error('Error fetching tools by category:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-export const getToolById = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const query = "SELECT * FROM tools WHERE id = $1";
-    const result = await pool.query(query, [id]);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Tool not found" });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching tool by ID");
-  }
-};
-

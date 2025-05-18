@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom';
-import '../styles/navbar.css';
+import { Link } from "react-router-dom";
+import "../styles/navbar.css";
 
 const Navbar = () => (
-  <nav>
-    <Link to="/">Home</Link>
-    <Link to="/category/powertools">Power Tools</Link>
-    <Link to="/category/handtools">Hand Tools</Link>
-    <Link to="/category/toolboxes">Tool Boxes</Link>
-    <li><Link to="/contact">Contact Us</Link></li> 
-    <Link to="/">About Us</Link>
+  <nav className="navbar">
+    <ul className="nav-links">
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/category/powertools">Power Tools</Link></li>
+      <li><Link to="/category/handtools">Hand Tools</Link></li>
+      <li><Link to="/category/toolboxes">Tool Boxes</Link></li>
+      <li><Link to="/contact">Contact Us</Link></li>
+      <li><Link to="/about">About Us</Link></li>
+    </ul>
   </nav>
 );
 
 export default Navbar;
+

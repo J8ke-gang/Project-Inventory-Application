@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-import { fetchCategories, fetchToolsByCategory } from "../api/api";
+import { useParams } from "react-router-dom";
+import { fetchToolsByCategory } from "../api/api";
+import "../styles/toolsPage.css";
 
 function ToolsPage() {
-  const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("");
-  const [tools, setTools] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { categoryName } = useParams();
 
+  const [tools, setTools] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Normalize category strings to match backend
   const normalizeCategory = (cat) => {
     if (!cat) return "";
     const c = cat.toLowerCase();
@@ -22,63 +26,52 @@ function ToolsPage() {
   };
 
   useEffect(() => {
-    fetchCategories()
-      .then((data) => {
-        setCategories(data);
-        if (data.length) setActiveCategory(data[0].category);
-      })
-      .catch(console.error);
-  }, []);
+    if (!categoryName) return;
 
-  useEffect(() => {
-    if (!activeCategory) return;
     setLoading(true);
+    setError(null);
 
-    const normalizedCategory = normalizeCategory(activeCategory);
-    console.log("Fetching tools for category:", normalizedCategory);
+    const normalizedCategory = normalizeCategory(categoryName);
 
     fetchToolsByCategory(normalizedCategory)
-      .then((data) => {
-        console.log("Tools data received:", data);
-        setTools(data);
-      })
-      .catch(console.error)
+      .then((data) => setTools(data))
+      .catch(() => setError("Failed to load tools."))
       .finally(() => setLoading(false));
-  }, [activeCategory]);
+  }, [categoryName]);
 
-  const capitalizeWords = (str) =>
-    str
-      .split(" ")
-      .map((w) => w[0].toUpperCase() + w.slice(1))
-      .join(" ");
+  if (!categoryName) {
+    return <p>Please select a category from the menu.</p>;
+  }
+
+  if (loading) {
+    return <p>Loading tools for {categoryName}...</p>;
+  }
+
+  if (error) {
+    return <p className="error">{error}</p>;
+  }
 
   return (
     <div className="tools-page-container">
-      <h1>Tools</h1>
-
-      <div className="category-buttons">
-        {categories.map((cat) => (
-          <button
-            key={cat.category}
-            onClick={() => setActiveCategory(cat.category)}
-            className={activeCategory === cat.category ? "active" : ""}
-          >
-            {capitalizeWords(cat.category)}
-          </button>
-        ))}
-      </div>
-
-      {loading ? (
-        <p>Loading tools...</p>
-      ) : tools.length ? (
+      <h1>Tools - {categoryName.replace(/([a-z])([A-Z])/g, "$1 $2")}</h1>
+      {tools.length ? (
         <ul className="tools-list">
           {tools.map((tool) => (
-            <li key={tool.id}>
-              <strong>{tool.name}</strong> —{" "}
-              {tool.description || "No description"}
-              In stock:{" "}
-              {tool.instock === true || tool.instock === "t" ? "Yes" : "No"} (
-              {tool.quantity})
+            <li key={tool.id} className="tool-item">
+              <img
+                src={tool.image_url}
+                alt={tool.name}
+                className="tool-image"
+              />
+              <div className="tool-info">
+                <strong>{tool.name}</strong> —{" "}
+                {tool.description || "No description"}
+                <br />
+                {tool.quantity > 0
+                  ? `In stock (${tool.quantity})`
+                  : "Out of stock"}
+                <p>Price: ${tool.price}</p>
+              </div>
             </li>
           ))}
         </ul>
