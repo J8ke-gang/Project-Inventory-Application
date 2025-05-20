@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchToolsByCategory } from "../api/api";
+import CartButton from "../components/cartButton"
 import "../styles/toolsPage.css";
 
 function ToolsPage() {
@@ -71,6 +72,7 @@ function ToolsPage() {
                   ? `In stock (${tool.quantity})`
                   : "Out of stock"}
                 <p>Price: ${tool.price}</p>
+                <CartButton tool={tool} />
               </div>
             </li>
           ))}

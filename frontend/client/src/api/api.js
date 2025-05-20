@@ -20,3 +20,28 @@ export const fetchToolsByCategory = async (category) => {
   if (!res.ok) throw new Error(`Failed to fetch tools for category: ${category}`);
   return res.json();
 };
+
+// === Add cart API functions ===
+
+export const getCartId = async (userId = 1) => {
+  const res = await fetch(`${API_BASE_URL}/api/cart/${userId}`);
+  if (!res.ok) throw new Error('Failed to get cart');
+  const cart = await res.json();
+  return cart.id;
+};
+
+export const addToCart = async (toolId, userId = 1) => {
+  const cartId = await getCartId(userId);
+
+  const res = await fetch(`${API_BASE_URL}/api/cart/items`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      cart_id: cartId,
+      tool_id: toolId,
+      quantity: 1,
+    }),
+  });
+
+  if (!res.ok) throw new Error('Failed to add item to cart');
+};

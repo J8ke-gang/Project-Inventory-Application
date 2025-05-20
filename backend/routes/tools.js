@@ -13,7 +13,7 @@ router.get('/image/:id', async (req, res) => {
     }
 
     const imageBuffer = result.rows[0].image_data;
-    res.set('Content-Type', 'image/jpeg'); // change if needed
+    res.set('Content-Type', 'image/jpeg');
     res.send(imageBuffer);
   } catch (error) {
     console.error(error);
