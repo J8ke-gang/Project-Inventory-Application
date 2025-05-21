@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/contactUs.css";
-
+// contact info
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,7 +12,7 @@ const ContactUs = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  //submit info
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Sending...");

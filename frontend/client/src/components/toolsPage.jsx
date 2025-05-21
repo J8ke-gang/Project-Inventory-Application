@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchToolsByCategory } from "../api/api";
-import CartButton from "../components/cartButton"
+import CartButton from "../components/cartButton";
 import "../styles/toolsPage.css";
 
 function ToolsPage() {
@@ -11,7 +11,7 @@ function ToolsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Normalize category strings to match backend
+  // Normalize category strings to match backend kept having errors this fixed it
   const normalizeCategory = (cat) => {
     if (!cat) return "";
     const c = cat.toLowerCase();
@@ -54,7 +54,7 @@ function ToolsPage() {
 
   return (
     <div className="tools-page-container">
-      <h1>Tools - {categoryName.replace(/([a-z])([A-Z])/g, "$1 $2")}</h1>
+      <h1> {categoryName.replace(/([a-z])([A-Z])/g, "$1 $2")}</h1>
       {tools.length ? (
         <ul className="tools-list">
           {tools.map((tool) => (

@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import pool from "../db/database.js";
 
-///create cart
+//create cart
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
   let cart = await pool.query("SELECT * FROM carts WHERE user_id = $1", [
@@ -19,7 +19,7 @@ router.get("/:userId", async (req, res) => {
   res.json(cart.rows[0]);
 });
 
-/// get items in cart
+// get items in cart
 router.get("/items/:cartId", async (req, res) => {
   const { cartId } = req.params;
   const items = await pool.query(
@@ -54,6 +54,34 @@ router.post("/items", async (req, res) => {
   }
 
   res.status(201).send("Item added");
+});
+
+// delete cart item
+router.delete("/items/:itemId", async (req, res) => {
+  const { itemId } = req.params;
+  try {
+    const result = await pool.query("DELETE FROM cart_items WHERE id = $1", [
+      itemId,
+    ]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Cart item not found" });
+    }
+    res.sendStatus(204);
+  } catch (err) {
+    console.error("Delete cart item error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// quantity in cart
+router.patch("/items/:itemId", async (req, res) => {
+  const { itemId } = req.params;
+  const { quantity } = req.body;
+  await pool.query("UPDATE cart_items SET quantity = $1 WHERE id = $2", [
+    quantity,
+    itemId,
+  ]);
+  res.sendStatus(200);
 });
 
 export default router;

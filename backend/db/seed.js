@@ -2,15 +2,14 @@ import pool from "./database.js";
 
 const seedTools = async () => {
   try {
+    // Drop tables
+    await pool.query("DROP TABLE IF EXISTS cart_items");
+    await pool.query("DROP TABLE IF EXISTS carts");
+    await pool.query("DROP TABLE IF EXISTS users");
+    await pool.query("DROP TABLE IF EXISTS tools");
 
- // Drop tables
-await pool.query("DROP TABLE IF EXISTS cart_items");
-await pool.query("DROP TABLE IF EXISTS carts");
-await pool.query("DROP TABLE IF EXISTS users");
-await pool.query("DROP TABLE IF EXISTS tools");
-
-// Create tools table
-await pool.query(`
+    // Create tools table
+    await pool.query(`
   CREATE TABLE tools (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
@@ -23,16 +22,16 @@ await pool.query(`
   );
 `);
 
-// Create users table
-await pool.query(`
+    // Create users table
+    await pool.query(`
   CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE
   );
 `);
 
-// Create carts table
-await pool.query(`
+    // Create carts table
+    await pool.query(`
   CREATE TABLE carts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id),
@@ -40,8 +39,8 @@ await pool.query(`
   );
 `);
 
-// Create cart_items table
-await pool.query(`
+    // Create cart_items table
+    await pool.query(`
   CREATE TABLE cart_items (
     id SERIAL PRIMARY KEY,
     cart_id INTEGER REFERENCES carts(id) ON DELETE CASCADE,
@@ -50,11 +49,10 @@ await pool.query(`
   );
 `);
 
-// Insert test user
-await pool.query(`
+    // Insert test user
+    await pool.query(`
   INSERT INTO users (username) VALUES ('testuser');
 `);
-
 
     // tool data,image URLs and tool descriptions
     await pool.query(`

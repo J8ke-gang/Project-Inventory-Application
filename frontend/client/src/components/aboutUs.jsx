@@ -1,4 +1,5 @@
 import "../styles/aboutUs.css";
+
 const AboutUs = () => {
   return (
     <div className="about-us-container">

@@ -1,8 +1,9 @@
-Mechanic Tools Inventory Management
-A web-based tool inventory management app that helps businesses track and manage their tool inventory. Users can view, add, update, and delete tools, while admins can manage tool data, brands, and categories.
+Mechanic Tools Inventory webpage
+
+A web-based tool inventory where users can view tool by category, add tools to cart, add multiple quanity of each tool and delete tools from cart.
 
 Project Description
-The Mechanic Tools Inventory Management app allows businesses to easily manage their tools. This app provides features for adding, updating, viewing, and deleting tools. Admin users can also manage tool brands and categories. The app is built with a React frontend and an Express.js backend, using PostgreSQL for the database.
+The Mechanic Tools Inventory webpage allows businesses to easily manage their tools. This app provides features for adding, updating, viewing, and deleting tools. The app is built with a React frontend and an Express.js backend, using PostgreSQL for the database.
 
 Technologies Used
 Frontend: React, JSX, CSS
