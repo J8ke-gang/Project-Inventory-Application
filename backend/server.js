@@ -29,11 +29,11 @@ app.use("/api/cart", cartRoutes);
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 // Serve React frontend static files
-app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // For all other routes, send back React's index.html file
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 const port = process.env.PORT || 3000;
