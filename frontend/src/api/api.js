@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+
 // normalize category keept getting error this fixed it
 const normalizeCategory = (category) => {
   const cat = category.toLowerCase();
