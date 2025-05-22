@@ -1,5 +1,7 @@
 import express from "express";
 import { getToolsByCategory } from "../controllers/toolsController.js";
+import pool from "../db/database.js";
+
 
 const router = express.Router();
 

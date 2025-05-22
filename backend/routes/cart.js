@@ -2,24 +2,12 @@ import express from "express";
 const router = express.Router();
 import pool from "../db/database.js";
 
-//create cart
-router.get("/:userId", async (req, res) => {
-  const { userId } = req.params;
-  let cart = await pool.query("SELECT * FROM carts WHERE user_id = $1", [
-    userId,
-  ]);
-
-  if (cart.rows.length === 0) {
-    cart = await pool.query(
-      "INSERT INTO carts (user_id) VALUES ($1) RETURNING *",
-      [userId]
-    );
-  }
-
-  res.json(cart.rows[0]);
+// Root test route
+router.get("/", (req, res) => {
+  res.json({ message: "Cart route works" });
 });
 
-// get items in cart
+// Get items in cart
 router.get("/items/:cartId", async (req, res) => {
   const { cartId } = req.params;
   const items = await pool.query(
@@ -32,7 +20,7 @@ router.get("/items/:cartId", async (req, res) => {
   res.json(items.rows);
 });
 
-// add item to cart
+// Add item to cart
 router.post("/items", async (req, res) => {
   const { cart_id, tool_id, quantity } = req.body;
 
@@ -56,7 +44,7 @@ router.post("/items", async (req, res) => {
   res.status(201).send("Item added");
 });
 
-// delete cart item
+// Delete cart item
 router.delete("/items/:itemId", async (req, res) => {
   const { itemId } = req.params;
   try {
@@ -73,7 +61,7 @@ router.delete("/items/:itemId", async (req, res) => {
   }
 });
 
-// quantity in cart
+// Update quantity
 router.patch("/items/:itemId", async (req, res) => {
   const { itemId } = req.params;
   const { quantity } = req.body;
@@ -82,6 +70,23 @@ router.patch("/items/:itemId", async (req, res) => {
     itemId,
   ]);
   res.sendStatus(200);
+});
+
+// Create/get cart by user ID — must go last!
+router.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  let cart = await pool.query("SELECT * FROM carts WHERE user_id = $1", [
+    userId,
+  ]);
+
+  if (cart.rows.length === 0) {
+    cart = await pool.query(
+      "INSERT INTO carts (user_id) VALUES ($1) RETURNING *",
+      [userId]
+    );
+  }
+
+  res.json(cart.rows[0]);
 });
 
 export default router;
