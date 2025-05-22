@@ -21,7 +21,6 @@ console.log("/api/cart", cartRoutes);
 app.use(cors());
 app.use(express.json());
 
-
 app.use("/categories", categoriesRoutes);
 app.use("/tools", toolsRoutes);
 app.use("/api/contact", contactRoutes);
