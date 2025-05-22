@@ -7,6 +7,7 @@ import toolsRoutes from "./routes/tools.js";
 import contactRoutes from "./routes/contact.js";
 import cartRoutes from "./routes/cart.js";
 
+
 // __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,4 +37,7 @@ app.get("*", (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+
+app.listen(port, async () => {
+  console.log(`Server running on port ${port}`);
+});
